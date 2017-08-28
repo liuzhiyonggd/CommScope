@@ -33,7 +33,12 @@ public class DataGenerator {
 		List<List<Integer>> vectorList = new ArrayList<List<Integer>>();
 		
 		List<EndLineVerify> endLineVerifyList = endLineVerifyRepo.findAll();
+		int count = 0;
 		for(EndLineVerify endLineVerify:endLineVerifyList) {
+			count++;
+			if(count>100) {
+				break;
+			}
 			int commentID = endLineVerify.getCommentID();
 			CommentEntry comment = commentRepo.findASingleByCommentID(commentID);
 			ClassMessage clazz = classRepo.findASingleByProjectAndCommitIDAndClassName(comment.getProject(), comment.getCommitID(), comment.getClassName());
@@ -152,7 +157,7 @@ public class DataGenerator {
 			output.add(vString);
 		}
 		
-		FileUtils.writeLines(new File("D:/work/8.24/data.arff"), output);
+		FileUtils.writeLines(new File("D:/work/8.24/data2.arff"), output);
 		
 	}
 	
