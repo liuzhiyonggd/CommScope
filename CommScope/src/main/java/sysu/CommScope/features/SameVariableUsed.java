@@ -23,6 +23,9 @@ public class SameVariableUsed implements Feature{
 		if(statementList.size()<=comparedIndex) {
 			return 0;
 		}
+		if(comparedIndex<0) {
+			return 0;
+		}
 		Statement currentStatement = statementList.get(statementIndex);
 		Statement compareStatement = statementList.get(comparedIndex);
 		

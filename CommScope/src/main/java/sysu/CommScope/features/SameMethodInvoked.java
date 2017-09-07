@@ -22,6 +22,9 @@ public class SameMethodInvoked implements Feature{
 		if(comparedIndex>=statementList.size()) {
 			return 0;
 		}
+		if(comparedIndex<0) {
+			return 0;
+		}
 		Statement currentStatement = statementList.get(statementIndex);
 		Statement compareStatement = statementList.get(comparedIndex);
 		

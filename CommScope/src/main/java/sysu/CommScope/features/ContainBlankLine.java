@@ -14,13 +14,14 @@ public class ContainBlankLine implements Feature{
 			List<Token> tokenList,CompilationUnit unit) {
 		int commentStartLine = unit.getLineNumber(statementList.get(0).getStartPosition())-1;
 		int startLine = unit.getLineNumber(statementList.get(statementIndex).getStartPosition());
+		int blankNum = 0;
 		for(int i=commentStartLine;i<startLine-1;i++) {
 			String code = codeList.get(i);
 			if(StringUtils.isBlank(code)) {
-				return 1;
+				blankNum++;
 			}
 		}
-		return 0;
+		return blankNum;
 	}
 
 }
