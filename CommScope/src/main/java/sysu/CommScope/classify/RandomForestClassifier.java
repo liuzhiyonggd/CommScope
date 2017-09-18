@@ -3,8 +3,11 @@ package sysu.CommScope.classify;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +35,7 @@ import weka.filters.supervised.attribute.Discretize;
 import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.attribute.Standardize;
 
-public class RandomForestClassifier {
+public class RandomForestClassifier implements Serializable{
 
 	private RandomForest classifier;
 	private String trainPath;
@@ -84,9 +87,9 @@ public class RandomForestClassifier {
 	}
 
 	private void init(int iterate, int percentage, int featuresNum) {
-//		 classifier.setBagSizePercent(percentage);
-//		 classifier.setNumFeatures(featuresNum);
-//		classifier.setNumIterations(iterate);
+		 classifier.setBagSizePercent(percentage);
+		 classifier.setNumFeatures(featuresNum);
+		classifier.setNumIterations(iterate);
 	}
 
 	private void removeID() {
@@ -152,9 +155,7 @@ public class RandomForestClassifier {
 			e.printStackTrace();
 			System.out.println("C45Classifier 分类失败.");
 		}
-
 		return result;
-
 	}
 
 	public void getClassifyResult(String testPath, String result) {
@@ -277,12 +278,41 @@ public class RandomForestClassifier {
 		    return false;
 		}
 	}
+	
+	public void save(String filePath) {
+		FileOutputStream fos=null;
+		try {
+			fos = new FileOutputStream(new File(filePath));
+			ObjectOutputStream oos = new ObjectOutputStream(fos);  
+			oos.writeObject(this);  
+			oos.flush();  
+			oos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(fos!=null) {  
+			    try {
+					fos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		    
+	}
 
 	public static void main(String[] args) throws Exception {
-
-		RandomForestClassifier rs6 = new RandomForestClassifier("d:/work/9.7/train.arff", "d:/work/9.7/test.arff");
-		rs6.run(500, 6,6, "d:/work/9.7/test.arff", "d:/work/9.7/result.csv");
-		rs6.getCommentPrecision("d:/work/9.7/result.csv");
+		RandomForestClassifier rs = new RandomForestClassifier("d:/work/9.7/train_5.arff", "d:/work/9.7/test_5.arff");
+		rs.run(500, 80,5, "d:/work/9.7/test_5.arff", "d:/work/9.7/result_5.csv");
+		rs.getCommentPrecision("d:/work/9.7/result_5.csv");
+		RandomForestClassifier rs2 = new RandomForestClassifier("d:/work/9.11/train.arff", "d:/work/9.11/test.arff");
+		rs2.run(500, 80,6, "d:/work/9.11/test.arff", "d:/work/9.11/result.csv");
+		rs2.getCommentPrecision("d:/work/9.11/result.csv");
 	}
 
 }

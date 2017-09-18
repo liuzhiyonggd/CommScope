@@ -43,6 +43,7 @@ public class DataGenerator {
 		System.out.println(endLineVerifyList.size());
 		//去除重复的comment，以方便后期的处理
 		Set<Integer> commentIDSet = new HashSet<Integer>();
+		
 		for (EndLineVerify endLineVerify : endLineVerifyList) {
 			count++;
 			int commentID = endLineVerify.getCommentID();
@@ -143,8 +144,9 @@ public class DataGenerator {
 				featureList.add(new IsControlStatement(Statement.IF_STATEMENT));
 				featureList.add(new IsControlStatement(Statement.WHILE_STATEMENT));
 				featureList.add(new IsControlStatement(Statement.FOR_STATEMENT));
-//				featureList.add(new IsReturnStatement());
-//				featureList.add(new IsAssertStatement());
+				featureList.add(new IsReturnStatement());
+				featureList.add(new IsAssertStatement());
+				featureList.add(new StatementLines());
 				featureList.add(new LineDistance());
 				featureList.add(new StatementDistance());
 				featureList.add(new TotalLineNumber());
@@ -204,6 +206,7 @@ public class DataGenerator {
 		head.add("@attribute 'ForStatement' numeric");
 		head.add("@attribute 'ReturnStatement' numeric");
 		head.add("@attribute 'AssertStatement' numeric");
+		head.add("@attribute 'StatementLines' numeric");
 		head.add("@attribute 'LineDistance' numeric");
 		head.add("@attribute 'StatementDistance' numeric");
 		head.add("@attribute 'TotalLineNumber' numeric");
@@ -247,8 +250,8 @@ public class DataGenerator {
 			num++;
 		}
 
-		FileUtils.writeLines(new File("D:/work/9.7/train_5.arff"), trainList);
-		FileUtils.writeLines(new File("D:/work/9.7/test_5.arff"), testList);
+		FileUtils.writeLines(new File("D:/work/9.11/train.arff"), trainList);
+		FileUtils.writeLines(new File("D:/work/9.11/test.arff"), testList);
 
 	}
 

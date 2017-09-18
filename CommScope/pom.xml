@@ -29,12 +29,13 @@
 			<version>4.3.7.RELEASE</version>
 		</dependency>
 
-		<!-- eclipse ast -->
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jdt/org.eclipse.jdt.core -->
 		<dependency>
 			<groupId>org.eclipse.jdt</groupId>
-			<artifactId>core</artifactId>
-			<version>3.3.0-v_771</version>
+			<artifactId>org.eclipse.jdt.core</artifactId>
+			<version>3.12.3</version>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
 		<dependency>
