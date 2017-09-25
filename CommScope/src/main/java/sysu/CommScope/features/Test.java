@@ -27,17 +27,16 @@ public class Test {
 		CommentRepository commentRepo = RepositoryFactory.getCommentRepository();
 		
 		CommentEntry comment = commentRepo.findASingleByCommentID(111274);
-		ClassMessage clazz = classRepo.findASingleByProjectAndCommitIDAndClassName(
-				comment.getProject(), comment.getCommitID(), comment.getClassName());
+		ClassMessage clazz = classRepo.findASingleByClassID(comment.getClassID());
 		
-		List<Token> tokenList = clazz.getOldTokenList();
+		List<Token> tokenList = clazz.getTokenList();
 		
 		List<String> codeList = new ArrayList<String>();
-		List<Line> codes = clazz.getOldCode();
+		List<String> codes = clazz.getCodeList();
 		String source = "";
-		for(Line line:codes) {
-			codeList.add(line.getLine());
-			source += line.getLine()+"\n";
+		for(String code:codes) {
+			codeList.add(code);
+			source += code+"\n";
 		}
 		
 		//获取整个类的方法列表
@@ -54,12 +53,12 @@ public class Test {
 			int methodStartLine = unit.getLineNumber(method.getStartPosition());
 			int methodEndLine = unit.getLineNumber(method.getStartPosition()+method.getLength()-1);
 			
-			if(methodStartLine<=comment.getOld_comment_startLine()&&methodEndLine>=comment.getOld_comment_endLine()) {
+			if(methodStartLine<=comment.getCommentStartLine()&&methodEndLine>=comment.getCommentEndLine()) {
 				List<Statement> statements = (List<Statement>)method.getBody().statements();
 				for(Statement statement:statements) {
 					int statementStartLine = unit.getLineNumber(statement.getStartPosition());
 					int statementEndLine = unit.getLineNumber(statement.getStartPosition()+statement.getLength()-1);
-					if(statementStartLine>=comment.getOld_scope_startLine()&&statementEndLine<=comment.getOld_scope_endLine()) {
+					if(statementStartLine>=comment.getScopeStartLine()&&statementEndLine<=comment.getScopeEndLine()) {
 						statementList.add(statement);
 					}
 				}
