@@ -15,8 +15,6 @@ public class ClassMessage {
 	@Field("class_name")
 	private String className;
 	
-	private String type;
-	
 	@Field("codes")
 	private List<String> codeList;  
 	
@@ -24,9 +22,6 @@ public class ClassMessage {
 	@Field("tokens")
 	private List<Token> tokenList;
 	
-	@Field("comment")
-	private List<CodeComment> comment;
-
 	public int getClassID() {
 		return classID;
 	}
@@ -51,14 +46,6 @@ public class ClassMessage {
 		this.className = className;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public List<String> getCodeList() {
 		return codeList;
 	}
@@ -75,12 +62,4 @@ public class ClassMessage {
 		this.tokenList = tokenList;
 	}
 
-	public List<CodeComment> getComment() {
-		return comment;
-	}
-
-	public void setComment(List<CodeComment> comment) {
-		this.comment = comment;
-	}
-	
 }

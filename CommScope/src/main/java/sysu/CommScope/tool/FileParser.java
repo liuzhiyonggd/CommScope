@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 
+import sysu.CommScope.ast.UnitCompiler;
 import sysu.CommScope.bean.CodeComment;
 
 public class FileParser {

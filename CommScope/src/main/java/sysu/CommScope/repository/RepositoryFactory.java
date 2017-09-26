@@ -23,5 +23,13 @@ public class RepositoryFactory {
 		return context.getBean(EndLineVerifyRepository.class);
 	}
 	
+	public static ClassMaxIdRepository getClassMaxIdRepository() {
+		return context.getBean(ClassMaxIdRepository.class);
+	}
+	
+	public static CommentMaxIdRepository getCommentMaxIdRepository() {
+		return context.getBean(CommentMaxIdRepository.class);
+	}
+	
 
 }

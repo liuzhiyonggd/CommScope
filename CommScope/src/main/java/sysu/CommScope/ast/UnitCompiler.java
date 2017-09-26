@@ -1,4 +1,4 @@
-package sysu.CommScope.tool;
+package sysu.CommScope.ast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import sysu.CommScope.bean.CodeComment;
+import sysu.CommScope.tool.Method;
 
 public class UnitCompiler {
 	private CompilationUnit unit;
