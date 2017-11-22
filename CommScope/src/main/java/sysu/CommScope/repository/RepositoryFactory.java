@@ -31,5 +31,17 @@ public class RepositoryFactory {
 		return context.getBean(CommentMaxIdRepository.class);
 	}
 	
+	public static ConsistencyVerifyRepository getConsistencyRepository() {
+		return context.getBean(ConsistencyVerifyRepository.class);
+	}
+	
+	public static MethodRepository getMethodRepository() {
+		return context.getBean(MethodRepository.class);
+	}
+	
+	public static MethodMaxIdRepository getMethodMaxRepository() {
+		return context.getBean(MethodMaxIdRepository.class);
+	}
+	
 
 }

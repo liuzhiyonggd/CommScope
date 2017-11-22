@@ -387,8 +387,8 @@ public class Parser2 {
 
                         int startLine = unit.getLineNumber(node.getStartPosition());
                         int endLine = unit.getLineNumber(node.getStartPosition() + node.getLength());
-
-                        tk.addToken("MethodInvocation",null,startLine,endLine,TokenType.MethodInvocation.ordinal());
+                        
+                        tk.addToken("MethodInvocation",node.getName().getFullyQualifiedName(),startLine,endLine,TokenType.MethodInvocation.ordinal());
                         return true;
                     }
 
@@ -407,7 +407,7 @@ public class Parser2 {
                         int startLine = unit.getLineNumber(node.getStartPosition());
                         int endLine = unit.getLineNumber(node.getStartPosition() + node.getLength());
 
-                        tk.addToken("NumberLiteral",null,startLine,endLine,TokenType.NumberLiteral.ordinal());
+                        tk.addToken("NumberLiteral",node.toString(),startLine,endLine,TokenType.NumberLiteral.ordinal());
 
                         return true;
                     }
@@ -468,7 +468,11 @@ public class Parser2 {
                     }
                     
                     public boolean	visit(ReturnStatement node) {
-                        return false;
+                    	int startLine = unit.getLineNumber(node.getStartPosition());
+                        int endLine = unit.getLineNumber(node.getStartPosition() + node.getLength());
+                        tk.addToken("ReturnStatement","return",startLine,endLine,TokenType.ReturnStatement.ordinal());
+
+                        return true;
                     }
 
                     public boolean visit(SimpleName node) {
@@ -548,7 +552,10 @@ public class Parser2 {
 
 
                     public boolean	visit(SwitchStatement node) {
-                        return false;
+                    	int startLine = unit.getLineNumber(node.getStartPosition());
+                        int endLine = unit.getLineNumber(node.getStartPosition() + node.getLength());
+                    	tk.addToken("SwitchStatement", null, startLine, endLine, TokenType.SwitchStatement.ordinal());
+                        return true;
                     }
 
                     public boolean	visit(SynchronizedStatement node) {
@@ -622,7 +629,8 @@ public class Parser2 {
 
                         int startLine = unit.getLineNumber(node.getStartPosition());
                         int endLine = unit.getLineNumber(node.getStartPosition() + node.getLength());
-                        tk.addToken("VariableDeclarationFragment",null,startLine,endLine,TokenType.VariableDeclarationFragment.ordinal());
+                        
+                        tk.addToken("VariableDeclarationFragment",node.getName().getFullyQualifiedName(),startLine,endLine,TokenType.VariableDeclarationFragment.ordinal());
 
                         return true;
                     }

@@ -1,11 +1,15 @@
 package sysu.CommScope.bean;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="classmaxid")
 public class ClassMaxID {
 
+	@Id
+	private String id;
+	
 	@Field("maxid")
 	private int maxID;
 
@@ -15,6 +19,14 @@ public class ClassMaxID {
 
 	public void setMaxID(int maxID) {
 		this.maxID = maxID;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

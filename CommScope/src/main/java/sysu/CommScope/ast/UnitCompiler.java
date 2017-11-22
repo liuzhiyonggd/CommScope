@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import sysu.CommScope.bean.CodeComment;
+import sysu.CommScope.bean.Token;
+import sysu.CommScope.token.Parser2;
 import sysu.CommScope.tool.Method;
 
 public class UnitCompiler {
@@ -51,6 +53,9 @@ public class UnitCompiler {
 			getUnit();
 		}
 		
+		//获取token列表
+		List<Token> tokenList = Parser2.parseAST2Tokens(unit).getTokenList();
+		
 		//获取整个文件的注释信息
 		List<Comment> commentList = unit.getCommentList();
 		List<CodeComment> codeCommentList = new ArrayList<CodeComment>();
@@ -58,6 +63,8 @@ public class UnitCompiler {
 			CodeComment codeComment = new CodeComment();
 			int startLine = unit.getLineNumber(comment.getStartPosition());
 			int endLine = unit.getLineNumber(comment.getStartPosition()+comment.getLength()-1);
+			int startPosition = comment.getStartPosition();
+			int endPosition = comment.getStartPosition()+comment.getLength()-1;
 			String type;
 			if(comment.getNodeType()==Comment.JAVADOC) {
 				type = "Javadoc";
@@ -71,6 +78,7 @@ public class UnitCompiler {
 			codeComment.setScopeStartLine(startLine);
 			codeComment.setEndLine(endLine);
 			codeComment.setType(type);
+			codeComment.setStartPosition(startPosition);
 			codeCommentList.add(codeComment);
 		}
 		
@@ -89,6 +97,18 @@ public class UnitCompiler {
 					method.setStartLine(unit.getLineNumber(methodDeclaration.getStartPosition()));
 					method.setEndLine(unit.getLineNumber(methodDeclaration.getStartPosition()+methodDeclaration.getLength()-1));
 					method.setStatementList(methodDeclaration.getBody().statements());
+					
+					for(int i=0,n=codeCommentList.size();i<n;i++){
+						CodeComment comment = codeCommentList.get(i);
+						for(Token token:tokenList){
+							if(token.getStartLine()==comment.getStartLine()&&token.getEndLine()==comment.getEndLine()){
+								codeCommentList.remove(i);
+								i--;
+								n--;
+								break;
+							}
+					    }
+					}
 					
 					List<CodeComment> methodCommentList = new ArrayList<CodeComment>();
 					for(int i=1;i<codeCommentList.size();i++) {

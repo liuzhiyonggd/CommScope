@@ -19,10 +19,9 @@ public class FileParser {
 		for(Method method:methodList) {
 			List<CodeComment> methodCommentList = method.getCodeCommentList();
 			List<Statement> methodStatementList = method.getStatementList();
-			System.out.println("method statement list size:"+methodStatementList.size()+" method start line:"+method.getStartLine());
 			for(int i=0,n=methodCommentList.size();i<n;i++) {
 				CodeComment codeComment = methodCommentList.get(i);
-				int scopeEndLine = CommentScopeTool.computeCommentScope(codeComment, i, methodCommentList, method.getStatementList(), unit, method.getEndLine());
+				int scopeEndLine = CommentScopeTool.computeCommentScope(codeComment, i, methodCommentList, methodStatementList, unit, method.getEndLine());
 			    codeComment.setScopeEndLine(scopeEndLine);
 			    codeCommentList.add(codeComment);
 			}

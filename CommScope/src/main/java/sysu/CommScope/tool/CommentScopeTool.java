@@ -27,18 +27,8 @@ public class CommentScopeTool {
 		int currentCommentStartLine = comment.getStartLine();
 		int currentCommentEndLine = comment.getEndLine();
 		int[] levels = computeCommentLevels(statements, commentList, unit);
-		System.out.print("levels: ");
-		for(int i=0;i<levels.length;i++) {
-			System.out.print(levels[i]+" ");
-		}
-		System.out.println();
 		int currentLevel = levels[commentIndex];
-		/*
-		 * Ѱ�ҵ�ǰcomment���ڵķ�����������comment�ķ�Χ ��Χȡ��һcomment����һ�кͷ��������е���Сֵ
-		 * ��comment�������У����䷶Χ����������ķ�Χ
-		 */
-
-		// ע���������ͬһ�е����
+		
 		boolean isCommentCodeSameLine = false;
 		Queue<Statement> queue = new LinkedList<Statement>();
 		List<Statement> staList = new ArrayList<Statement>();
@@ -63,7 +53,6 @@ public class CommentScopeTool {
 		if (!isCommentCodeSameLine) {
 			CodeComment nextComment = null;
 
-			// Ѱ���뵱ǰComment���ڵ���һ��Comment��ȥ�����������
 			for (int i = 0, n = commentList.size(); i < n; i++) {
 				if (commentList.get(i).getStartLine() > comment.getStartLine() && levels[i] == currentLevel) {
 					nextComment = commentList.get(i);
@@ -71,7 +60,7 @@ public class CommentScopeTool {
 				}
 			}
 
-			int nextCommentStartLine = Integer.MAX_VALUE;// ������һ��comment����nextComment��startLineΪ�����
+			int nextCommentStartLine = Integer.MAX_VALUE;
 			if (nextComment != null) {
 				nextCommentStartLine = nextComment.getStartLine();
 			}

@@ -1,12 +1,16 @@
 package sysu.CommScope.bean;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="class_message")
 public class ClassMessage {
 
+	@Id
+	private String id;
+	
 	@Field("class_id")
 	private int classID;
 	
@@ -17,7 +21,6 @@ public class ClassMessage {
 	
 	@Field("codes")
 	private List<String> codeList;  
-	
 	
 	@Field("tokens")
 	private List<Token> tokenList;
@@ -61,5 +64,15 @@ public class ClassMessage {
 	public void setTokenList(List<Token> tokenList) {
 		this.tokenList = tokenList;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
 
 }

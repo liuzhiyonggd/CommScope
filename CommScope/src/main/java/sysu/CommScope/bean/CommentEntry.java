@@ -3,11 +3,15 @@ package sysu.CommScope.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="comment")
 public class CommentEntry {
+	
+	@Id
+	private String id;
 	
 	@Field("class_id")
 	private int classID;
@@ -18,16 +22,18 @@ public class CommentEntry {
 	@Field("comment_id")
 	private int commentID;
 	
+	private String project;
+	
 	@Field("comment")
 	private List<String> comment = new ArrayList<String>();
 	
 	@Field("codes")
 	private List<String> codeList = new ArrayList<String>();
 	
-	
 	@Field("tokens")
 	private List<Token> tokenList = new ArrayList<Token>();
 	
+	private String type;
 	
 	@Field("scope_start_line")
 	private int scopeStartLine;
@@ -40,9 +46,12 @@ public class CommentEntry {
 	
 	@Field("comment_end_line")
 	private int commentEndLine;
+	
+	@Field("comment_start_position")
+	private int commentStartPosition;
 
 	@Field("verify_scope_end_line")
-	private int verifyScopeEndLine;
+	private List<Integer> verifyScopeEndLine;
 	
 	@Field("verify_count")
 	private int verifyCount;
@@ -127,12 +136,16 @@ public class CommentEntry {
 		this.commentEndLine = commentEndLine;
 	}
 
-	public int getVerifyScopeEndLine() {
+	public List<Integer> getVerifyScopeEndLine() {
 		return verifyScopeEndLine;
 	}
 
-	public void setVerifyScopeEndLine(int verifyScopeEndLine) {
+	public void setVerifyScopeEndLine(List<Integer> verifyScopeEndLine) {
 		this.verifyScopeEndLine = verifyScopeEndLine;
+	}
+	
+	public void addVerifyScopeEndLine(int verify) {
+		verifyScopeEndLine.add(verify);
 	}
 
 	public int getVerifyCount() {
@@ -141,6 +154,38 @@ public class CommentEntry {
 
 	public void setVerifyCount(int verifyCount) {
 		this.verifyCount = verifyCount;
+	}
+
+	public String getProject() {
+		return project;
+	}
+
+	public void setProject(String project) {
+		this.project = project;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getCommentStartPosition() {
+		return commentStartPosition;
+	}
+
+	public void setCommentStartPosition(int commentStartPosition) {
+		this.commentStartPosition = commentStartPosition;
 	}
 	
 	

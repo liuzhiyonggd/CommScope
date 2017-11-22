@@ -10,9 +10,6 @@ import sysu.CommScope.bean.ClassMessage;
 
 public interface ClassMessageRepository extends MongoRepository<ClassMessage,ObjectId>{
 	
-	List<ClassMessage> findByProjectAndCommitID(String project,int commitID);
-	List<ClassMessage> findByProjectAndType(String project,String type);
-	List<ClassMessage> findByType(String type);
 	List<ClassMessage> findByProject(String project);
 	ClassMessage findASingleByClassID(int classID);
 

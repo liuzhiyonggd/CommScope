@@ -1,9 +1,7 @@
 package sysu.CommScope.config;
 
 
-import java.util.Arrays;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -22,12 +20,12 @@ public class MongoConfig extends AbstractMongoConfiguration{
 
 	@Override
 	protected String getDatabaseName() {
-		return "sourcebase";
+		return "scopebase";
 	}
 
 	@Override
 	public Mongo mongo() throws Exception {
-		return new MongoClient(new ServerAddress("192.168.2.168",27017));
+		return new MongoClient(new ServerAddress("192.168.1.60",27017));
 	}
 	
 }

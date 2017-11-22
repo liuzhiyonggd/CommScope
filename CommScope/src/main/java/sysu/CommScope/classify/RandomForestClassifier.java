@@ -307,12 +307,12 @@ public class RandomForestClassifier implements Serializable{
 	}
 
 	public static void main(String[] args) throws Exception {
-		RandomForestClassifier rs = new RandomForestClassifier("d:/work/9.7/train_5.arff", "d:/work/9.7/test_5.arff");
-		rs.run(500, 80,5, "d:/work/9.7/test_5.arff", "d:/work/9.7/result_5.csv");
-		rs.getCommentPrecision("d:/work/9.7/result_5.csv");
-		RandomForestClassifier rs2 = new RandomForestClassifier("d:/work/9.11/train.arff", "d:/work/9.11/test.arff");
-		rs2.run(500, 80,6, "d:/work/9.11/test.arff", "d:/work/9.11/result.csv");
-		rs2.getCommentPrecision("d:/work/9.11/result.csv");
+//		RandomForestClassifier rs = new RandomForestClassifier("d:/work/9.7/train_5.arff", "d:/work/9.7/train_5.arff");
+//		rs.run(500, 80,5, "d:/work/9.7/train_5.arff", "d:/work/9.7/result_train_5.csv");
+//		rs.getCommentPrecision("d:/work/9.7/result_5.csv");
+		RandomForestClassifier rs2 = new RandomForestClassifier("d:/work/9.7/train_5.arff", "d:/work/9.7/test_5.arff");
+		rs2.run(500, 80,5, "d:/work/9.7/test_5.arff", "d:/work/9.7/result_test_5.csv");
+		rs2.getCommentPrecision("d:/work/9.7/result_test_5.csv");
 	}
 
 }

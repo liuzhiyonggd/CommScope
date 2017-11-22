@@ -12,6 +12,9 @@ public class CodeComment {
 	@Field("end_line")
 	private int endLine;
 	
+	@Field("start_position")
+	private int startPosition;
+	
 	@Field("scope_startline")
 	private int scopeStartLine;
 	
@@ -48,6 +51,12 @@ public class CodeComment {
 	}
 	public void setScopeEndLine(int scopeEndLine) {
 		this.scopeEndLine = scopeEndLine;
+	}
+	public int getStartPosition() {
+		return startPosition;
+	}
+	public void setStartPosition(int startPosition) {
+		this.startPosition = startPosition;
 	}
 	
 
