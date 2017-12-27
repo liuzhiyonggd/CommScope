@@ -22,18 +22,18 @@ public class ResultFilter {
 			List<String> cloneBlocks = new ArrayList<String>();
 			for(int i=1;i<temps.length;i++) {
 				String[] temps2 = temps[i].split(" ");
-				if(temps2.length<5) {
+				if(temps2.length<2) {
 					continue;
 				}
-				double sim2 = Double.parseDouble(temps2[3]);
-				if(sim2>=0.5d) {
-					 cloneBlocks.add(temps[i]);
-				}
+				
+				cloneBlocks.add(temps[i]);
+				
 			}
 			if(cloneBlocks.size()>5) {
 				commentCount ++;
 				result.add(commentID+":");
 				result.addAll(cloneBlocks);
+				result.add("end");
 			}
 		}
 		System.out.println(commentCount);
@@ -41,9 +41,9 @@ public class ResultFilter {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		List<String> result = filter("F:/commentfiles/comment1_result.txt");
+		List<String> result = filter("F:/cloneresults/71/comment71_7099_result.txt");
 		
-//		FileUtils.writeLines(new File("F:/commentfiles/comment1_result_filter.txt"), result);
+//		FileUtils.writeLines(new File("F:/cloneresults/71/comment71_7099_filter_result.txt"), result);
 	}
 
 }

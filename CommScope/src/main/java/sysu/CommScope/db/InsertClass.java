@@ -40,8 +40,11 @@ public class InsertClass {
 		} catch (IOException e) {
 			log.error("read file error.");
 		}
+		
+		if(codeList.size()>5000)return;
 
 		List<CodeComment> commentList = FileParser.parseFile2CommentList(codeList);
+		System.out.println("comment size:"+commentList.size());
 		ClassMessage clazz = new ClassMessage();
 		clazz.setProject(project);
 
@@ -99,6 +102,7 @@ public class InsertClass {
 			comment.setVerifyCount(0);
 			comment.setVerifyScopeEndLine(new ArrayList<Integer>());
 			commentRepository.insert(comment);
+			System.out.println("insert comment.");
 		}
 
 	}
@@ -124,6 +128,7 @@ public class InsertClass {
 		}
 
 		for (File f : fileList) {
+			System.out.println("insert " + f.getName());
 			insert(f.getAbsolutePath(), project);
 		}
 	}
@@ -132,11 +137,10 @@ public class InsertClass {
 		InsertClass insertClass = new InsertClass();
 		
 
-		List<String> projects = FileUtils.readLines(new File("F:/projects.txt"),"UTF-8");
-		for (String project : projects) {
-			insertClass.insertProject(project);
-			System.out.println(project + " is done.");
-		}
+		
+			insertClass.insertProject("jedit");
+			System.out.println("jedit" + " is done.");
+
 	}
 
 }

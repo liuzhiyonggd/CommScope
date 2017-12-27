@@ -50,9 +50,9 @@ public class CommentFileGenerator {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		for(int i=1;i<=79;i++) {
-		    List<String> commentLines = generate((i-1)*10000+1, i*10000);
-		    FileUtils.writeLines(new File("F:/commentfiles2/comment"+i+".txt"), commentLines);
+		for(int i=1;i<=7900;i++) {
+		    List<String> commentLines = generate((i-1)*100+1, i*100);
+		    FileUtils.writeLines(new File("F:/commentfiles3/comment"+i+".txt"), commentLines);
 		}
 	}
 

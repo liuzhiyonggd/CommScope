@@ -11,6 +11,8 @@ import sysu.CommScope.bean.CommentEntry;
 public interface CommentRepository extends MongoRepository<CommentEntry,ObjectId>{
 	CommentEntry findASingleByCommentID(int commentID);
 	List<CommentEntry> findByProject(String project);
+	List<CommentEntry> findByClassID(int classID);
+	List<CommentEntry> findByClassNameLike(String className);
 	
 	
 }

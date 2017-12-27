@@ -134,7 +134,7 @@ public class CloneBlockDetector {
 				for (int startLine = 0; startLine < methodHashBean.getLines().size(); startLine++) {
 					List<Integer> methodHashList = methodHashBean.getLines().get(startLine).getHashList();
 					double sim = SimilarComputer.jaccard(commentHashList, methodHashList);
-					if (sim > 0.8d) {
+					if (sim > 0.99d) {
 						MethodHashBean candidateMethodHashBean = new MethodHashBean();
 						candidateMethodHashBean.setClassID(methodHashBean.getClassID());
 						candidateMethodHashBean.setMethodID(methodHashBean.getMethodID());
@@ -162,7 +162,7 @@ public class CloneBlockDetector {
 				}
 				List<Integer> methodHashList = methodHashBean.getLines().get(startLine + lineIndex).getHashList();
 				double sim = SimilarComputer.jaccard(commentHashList, methodHashList);
-				if (sim < 0.5d) {
+				if (sim < 0.99d) {
 					continue;
 				}
 				MethodHashBean.LineSimilar lineSimilar = methodHashBean.new LineSimilar();
@@ -193,11 +193,11 @@ public class CloneBlockDetector {
 	}
 
 	public static void main(String[] args) throws IOException {
-		for (int i = 2; i <= 3; i++) {
+		for (int i = 1; i <= 7900; i++) {
 			for (int j = 1; j <= 45; j++) {
-				List<String> result = detect("f:/commentfiles2/comment" + i + ".txt",
+				List<String> result = detect("f:/commentfiles3/comment" + i + ".txt",
 						"f:/methodfiles2/method_" + j + ".txt");
-				FileUtils.writeLines(new File("f:/cloneresults/comment" + i + "_method_" + j + "_result.txt"), result);
+				FileUtils.writeLines(new File("f:/cloneresults3/comment" + i + "_method_" + j + "_result.txt"), result);
 				System.out.println("comment file " + i + " method file "+j+" done.");
 			}
 		}

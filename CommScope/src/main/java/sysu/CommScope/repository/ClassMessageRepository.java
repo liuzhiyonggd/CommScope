@@ -12,5 +12,6 @@ public interface ClassMessageRepository extends MongoRepository<ClassMessage,Obj
 	
 	List<ClassMessage> findByProject(String project);
 	ClassMessage findASingleByClassID(int classID);
+	List<ClassMessage> findByClassNameLike(String className);
 
 }
