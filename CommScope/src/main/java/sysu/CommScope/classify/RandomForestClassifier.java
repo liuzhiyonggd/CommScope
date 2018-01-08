@@ -305,14 +305,85 @@ public class RandomForestClassifier implements Serializable{
 		}
 		    
 	}
+	
+	public void generateSecondDatas(String firstDataPath,String savePath) {
+		try {
+			List<String> fileList = FileUtils.readLines(new File(firstDataPath),"UTF-8");
+			Map<Integer,List<String>> commentMap = new HashMap<Integer,List<String>>();
+			for(String str:fileList) {
+				String[] temps = str.split(",");
+				int commentID = Integer.parseInt(temps[0]);
+				if(commentMap.containsKey(commentID)) {
+					commentMap.get(commentID).add(str);
+				}else {
+					List<String> temp = new ArrayList<String>();
+					temp.add(str);
+					commentMap.put(commentID, temp);
+				}
+			}
+			
+			List<CommentClassifyResult> commentResultList = new ArrayList<CommentClassifyResult>();
+			for(Map.Entry<Integer, List<String>> entry:commentMap.entrySet()) {
+				CommentClassifyResult commentResult = new CommentClassifyResult();
+				commentResult.setCommentID(entry.getKey());
+				
+				for(String str:entry.getValue()) {
+					String[] temps = str.split(",");
+					int classValue = (int)Double.parseDouble(temps[2]);
+					int classifyValue = (int)Double.parseDouble(temps[3]);
+					
+					commentResult.getRealLabelList().add(classValue);
+					commentResult.getClassifyLabelList().add(classifyValue);
+				}
+				commentResultList.add(commentResult);
+			}
+			
+			List<String> output = new ArrayList<String>();
+			output.add("@relation 'commentscope'");
+			for(int i=1;i<=30;i++) {
+				output.add("@attribute 'statement_"+i+"' {0,1}");
+			}
+			output.add("@attribute 'class' {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30}");
+			output.add("@data");
+			for(CommentClassifyResult commentResult:commentResultList) {
+				int classLabel = 0;
+				for(int i=0;i<commentResult.getRealLabelList().size();i++) {
+					if(commentResult.getRealLabelList().get(i)!=0) {
+						classLabel = i+1;
+					}else {
+						break;
+					}
+				}
+				String line = commentResult.getCommentID()+",";
+				int i=0;
+				for(;i<commentResult.getClassifyLabelList().size();i++) {
+					line += commentResult.getClassifyLabelList().get(i)+",";
+				}
+				for(;i<30;i++) {
+					line += "0,";
+				}
+				line += classLabel+"";
+				if(classLabel!=0) {
+				    output.add(line);
+				}
+			}
+			FileUtils.writeLines(new File(savePath), output);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) throws Exception {
 //		RandomForestClassifier rs = new RandomForestClassifier("d:/work/9.7/train_5.arff", "d:/work/9.7/train_5.arff");
 //		rs.run(500, 80,5, "d:/work/9.7/train_5.arff", "d:/work/9.7/result_train_5.csv");
 //		rs.getCommentPrecision("d:/work/9.7/result_5.csv");
-		RandomForestClassifier rs2 = new RandomForestClassifier("d:/work/9.7/train_5.arff", "d:/work/9.7/test_5.arff");
-		rs2.run(500, 80,5, "d:/work/9.7/test_5.arff", "d:/work/9.7/result_test_5.csv");
-		rs2.getCommentPrecision("d:/work/9.7/result_test_5.csv");
+		RandomForestClassifier rs2 = new RandomForestClassifier("file/train.arff", "file/test.arff");
+		rs2.run(100, 80,7, "file/test.arff", "file/test.csv");
+		rs2.getCommentPrecision("file/test.csv");
+		rs2.generateSecondDatas("file/test.csv", "file/test_new.arff");
+		
 	}
 
 }

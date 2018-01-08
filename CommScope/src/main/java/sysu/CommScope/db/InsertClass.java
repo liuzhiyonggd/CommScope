@@ -138,8 +138,8 @@ public class InsertClass {
 		
 
 		
-			insertClass.insertProject("jedit");
-			System.out.println("jedit" + " is done.");
+			insertClass.insertProject("jdk");
+			System.out.println("jdk" + " is done.");
 
 	}
 

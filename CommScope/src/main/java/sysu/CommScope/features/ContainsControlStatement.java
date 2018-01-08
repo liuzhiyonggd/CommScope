@@ -2,7 +2,9 @@ package sysu.CommScope.features;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 
 import sysu.CommScope.bean.Token;
@@ -22,6 +24,7 @@ public class ContainsControlStatement implements Feature {
 		} else {
 			this.containsStatementType = "ERROR";
 		}
+		comparedIndex = comparedStatementIndex; 
 	}
 
 	public int feature(String comment, int statementIndex, List<Statement> statementList, List<String> codeList,

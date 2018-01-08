@@ -30,32 +30,29 @@ import sysu.CommScope.repository.RepositoryFactory;
 
 public class DataGenerator {
 	public static void main(String[] args) throws IOException {
-		EndLineVerifyRepository endLineVerifyRepo = RepositoryFactory.getEndLineVerifyRepository();
 		ClassMessageRepository classRepo = RepositoryFactory.getClassRepository();
 		CommentRepository commentRepo = RepositoryFactory.getCommentRepository();
 
 		List<List<Integer>> vectorList = new ArrayList<List<Integer>>();
+		
+		List<String> verifyLines = FileUtils.readLines(new File("file/comment_verify.txt"),"UTF-8");
+		List<EndLineVerify> endLineVerifyList = new ArrayList<EndLineVerify>();
+		for(String str:verifyLines) {
+			String[] temps = str.split(":");
+			int commentID = Integer.parseInt(temps[0]);
+			int endLine = Integer.parseInt(temps[1]);
+			
+			EndLineVerify endLineVerify = new EndLineVerify();
+			endLineVerify.setCommentID(commentID);
+			endLineVerify.setEndLine(endLine);
+			endLineVerifyList.add(endLineVerify);
+		}
+		System.out.println(endLineVerifyList.size());
 
-		List<EndLineVerify> endLineVerifyList = endLineVerifyRepo.findAll();
-		int count = 0;
-		System.out.println(endLineVerifyList.size());
-		endLineVerifyList = sameVerifyFilter(endLineVerifyList);
-		System.out.println(endLineVerifyList.size());
-		//去除重复的comment，以方便后期的处理
-		Set<Integer> commentIDSet = new HashSet<Integer>();
 		
 		for (EndLineVerify endLineVerify : endLineVerifyList) {
-			count++;
 			int commentID = endLineVerify.getCommentID();
-			if(commentIDSet.contains(commentID)) {
-				continue;
-			}else {
-				commentIDSet.add(commentID);
-			}
 			CommentEntry comment = commentRepo.findASingleByCommentID(commentID);
-//			if(comment.getProject().equals("jgit")) {
-//				continue;
-//			}
 			if (endLineVerify.getEndLine() <= comment.getCommentEndLine()) {
 				continue;
 			}
@@ -95,7 +92,7 @@ public class DataGenerator {
 						if (statementStartLine >= comment.getScopeStartLine()
 								&& statementEndLine <= comment.getScopeEndLine()) {
 							statementList.add(statement);
-							System.out.println(statement.toString());
+							System.out.println(statement.getNodeType());
 							System.out.println("------------------------");
 						}
 					}
@@ -145,6 +142,15 @@ public class DataGenerator {
 				featureList.add(new IsControlStatement(Statement.IF_STATEMENT));
 				featureList.add(new IsControlStatement(Statement.WHILE_STATEMENT));
 				featureList.add(new IsControlStatement(Statement.FOR_STATEMENT));
+				
+				featureList.add(new IsControlStatement(Statement.TRY_STATEMENT));
+				featureList.add(new IsControlStatement(Statement.CATCH_CLAUSE));
+				featureList.add(new IsControlStatement(Statement.BREAK_STATEMENT));
+				featureList.add(new IsControlStatement(Statement.BLOCK));
+				featureList.add(new IsControlStatement(Statement.DO_STATEMENT));
+				featureList.add(new IsControlStatement(Statement.THROW_STATEMENT));
+				featureList.add(new IsControlStatement(Statement.CONDITIONAL_EXPRESSION));
+				
 				featureList.add(new IsReturnStatement());
 				featureList.add(new IsAssertStatement());
 				featureList.add(new StatementLines());
@@ -205,6 +211,15 @@ public class DataGenerator {
 		head.add("@attribute 'IfStatement' numeric");
 		head.add("@attribute 'WhileStatement' numeric");
 		head.add("@attribute 'ForStatement' numeric");
+		
+		head.add("@attribute 'tryStatement' numeric");
+		head.add("@attribute 'catchStatement' numeric");
+		head.add("@attribute 'breakStatement' numeric");
+		head.add("@attribute 'blockStatement' numeric");
+		head.add("@attribute 'doStatement' numeric");
+		head.add("@attribute 'throwStatement' numeric");
+		head.add("@attribute 'conditionalStatement' numeric");
+		
 		head.add("@attribute 'ReturnStatement' numeric");
 		head.add("@attribute 'AssertStatement' numeric");
 		head.add("@attribute 'StatementLines' numeric");
@@ -251,8 +266,8 @@ public class DataGenerator {
 			num++;
 		}
 
-		FileUtils.writeLines(new File("D:/work/9.11/train.arff"), trainList);
-		FileUtils.writeLines(new File("D:/work/9.11/test.arff"), testList);
+		FileUtils.writeLines(new File("file/train.arff"), trainList);
+		FileUtils.writeLines(new File("file/test.arff"), testList);
 
 	}
 
